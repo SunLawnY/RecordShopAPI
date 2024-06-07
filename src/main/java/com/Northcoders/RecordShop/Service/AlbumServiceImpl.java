@@ -32,4 +32,9 @@ public class AlbumServiceImpl implements AlbumService {
         }
         return albumOptional.get();
     }
+
+    @Override
+    public Album addNewAlbum(Album album) {
+        return albumRepository.save(album);
+    }
 }

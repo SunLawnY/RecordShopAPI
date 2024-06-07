@@ -24,4 +24,9 @@ public class AlbumController {
     public ResponseEntity<Album> getAlbumById(@PathVariable Long id){
         return new ResponseEntity<>(albumService.getAlbumById(id), HttpStatus.OK);
     }
+
+    @PostMapping("/addNew")
+    public ResponseEntity<Album> addNewAlbum(@RequestBody Album album){
+        return new ResponseEntity<>(albumService.addNewAlbum(album), HttpStatus.OK);
+    }
 }
