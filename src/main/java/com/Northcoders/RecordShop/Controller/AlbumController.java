@@ -27,8 +27,8 @@ public class AlbumController {
         return new ResponseEntity<>(albumById, HttpStatus.OK);
     }
 
-    @PostMapping("/addNew")
+    @PostMapping("/addnew")
     public ResponseEntity<Album> addNewAlbum(@RequestBody Album album){
-        return new ResponseEntity<>(albumService.addNewAlbum(album), HttpStatus.OK);
+        return new ResponseEntity<>(albumService.addNewAlbum(album), HttpStatus.CREATED);
     }
 }

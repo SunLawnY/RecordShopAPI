@@ -2,6 +2,7 @@ package com.Northcoders.RecordShop.Controller;
 
 import com.Northcoders.RecordShop.Entity.Album;
 import com.Northcoders.RecordShop.Supporting.Genre;
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.Northcoders.RecordShop.Service.AlbumServiceImpl;
 import org.junit.jupiter.api.BeforeAll;
@@ -13,6 +14,7 @@ import org.mockito.Mock;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MockMvcBuilder;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
@@ -20,6 +22,7 @@ import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
 import java.util.List;
+import java.util.Optional;
 
 import static org.mockito.Mockito.*;
 
@@ -29,7 +32,7 @@ import static org.mockito.Mockito.*;
 class AlbumControllerTest {
 
     @Mock
-    private AlbumServiceImpl albumServiceImpl;
+    private AlbumServiceImpl mockAlbumServiceImpl;
 
     @InjectMocks
     private AlbumController albumController;
@@ -46,7 +49,7 @@ class AlbumControllerTest {
     }
 
     @Test
-    @DisplayName("GetAllAlbum")
+    @DisplayName("GetAllAlbumTest")
     void getAllAlbum() throws Exception {
         //Arrange
         List<Album> albums = List.of(
@@ -55,7 +58,7 @@ class AlbumControllerTest {
                 new Album(3L, "Artist 3", 2010, Genre.ELECTRONIC, "Album 3", 75)
         );
         // Act
-        when(albumServiceImpl.getAllAlbum()).thenReturn(albums);
+        when(mockAlbumServiceImpl.getAllAlbum()).thenReturn(albums);
 
         // Assert
 
@@ -70,14 +73,44 @@ class AlbumControllerTest {
                 .andExpect(MockMvcResultMatchers.jsonPath("$[?(@.id == 2)].artist").value("Artist 2"))
                 .andExpect(MockMvcResultMatchers.jsonPath("$[?(@.id == 3)].stock").value(75));
 
-        verify(albumServiceImpl, times(1)).getAllAlbum();
+        verify(mockAlbumServiceImpl, times(1)).getAllAlbum();
     }
 
     @Test
-    void getAlbumById() {
+    void getAlbumById() throws Exception {
+        //Arrange
+        List<Album> albums = List.of(
+                new Album(1L, "Artist 1", 2000, Genre.POP, "Album 1", 100),
+                new Album(2L, "Artist 2", 2005, Genre.HIP_HOP, "Album 2", 50),
+                new Album(3L, "Artist 3", 2010, Genre.ELECTRONIC, "Album 3", 75)
+        );
+        // Act
+        when(mockAlbumServiceImpl.getAlbumById(1L)).thenReturn(albums.get(0));
+
+        // Assert
+
+        this.mockMvcController.perform(
+                        MockMvcRequestBuilders.get("/album/1"))
+                .andExpect(MockMvcResultMatchers.status().isOk());
+
+        verify(mockAlbumServiceImpl, times(1)).getAlbumById(1L);
     }
 
     @Test
-    void addNewAlbum() {
+    @DisplayName("PostNewAlbumTest")
+    void addNewAlbum() throws Exception {
+        // Arrange
+        Album album = new Album(4L, "Artist 4", 2023, Genre.POP, "Album 4", 500);
+
+        // Act
+        when(mockAlbumServiceImpl.addNewAlbum(album)).thenReturn(album);
+
+        // Assert
+        this.mockMvcController.perform(
+                        MockMvcRequestBuilders.post("/album/addnew")
+                                .contentType(MediaType.APPLICATION_JSON)
+                                .content(mapper.writeValueAsString(album)))
+                .andExpect(MockMvcResultMatchers.status().isCreated());
+        //verify(mockAlbumServiceImpl, times(1)).addNewAlbum(album);
     }
 }
