@@ -30,5 +30,13 @@ public class Album {
     @Column(name = "STOCK")
     private Integer stock;
 
+    public Album(Long id, String artist, Integer releasedYear, Genre genre, String albumName, Integer stock) {
+        this.id = id;
+        this.artist = artist;
+        this.releasedYear = releasedYear;
+        this.genre = genre;
+        this.albumName = albumName;
+        this.stock = stock;
+    }
 }
 
