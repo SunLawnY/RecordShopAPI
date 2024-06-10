@@ -1,12 +1,3 @@
-CREATE TABLE IF NOT EXISTS Album (
-    id SERIAL PRIMARY KEY,
-    artist VARCHAR(255),
-    release_year INT,
-    genre VARCHAR(50),
-    album_name VARCHAR(255),
-    stock INT
-);
-
 INSERT INTO Album (artist, release_year, genre, album_name, stock)
 VALUES ('The Beatles', 1969, 'ROCK', 'Abbey Road', 10);
 
