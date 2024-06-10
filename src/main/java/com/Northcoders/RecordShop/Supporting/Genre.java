@@ -5,5 +5,6 @@ public enum Genre{
     HIP_HOP,
     ELECTRONIC,
     K_POP,
-    LATIN
+    LATIN,
+    ROCK
 }

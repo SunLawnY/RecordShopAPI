@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/album")
+@RequestMapping("/api/v1/album")
 public class AlbumController {
     @Autowired
     AlbumServiceImpl albumService;
@@ -30,5 +30,15 @@ public class AlbumController {
     @PostMapping("/addnew")
     public ResponseEntity<Album> addNewAlbum(@RequestBody Album album){
         return new ResponseEntity<>(albumService.addNewAlbum(album), HttpStatus.CREATED);
+    }
+
+    @PutMapping("/update/{id}")
+    public ResponseEntity<Album> updateAlbumById(@PathVariable Long id, @RequestBody Album album){
+        return new ResponseEntity<>(albumService.updateAlbumById(id, album), HttpStatus.ACCEPTED);
+    }
+
+    @DeleteMapping("/delete/{id}")
+    public ResponseEntity<Album> deleteAlbumById(@PathVariable Long id, @RequestBody Album album){
+        return new ResponseEntity<>(albumService.deleteAlbumById(id, album), HttpStatus.ACCEPTED);
     }
 }

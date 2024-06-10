@@ -3,12 +3,14 @@ package com.Northcoders.RecordShop.Entity;
 import com.Northcoders.RecordShop.Supporting.Genre;
 import jakarta.persistence.*;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Setter
 @Getter
 @Entity
-@Table(name = "ALBUMS")
+@NoArgsConstructor
+@Table(name = "ALBUM")
 public class Album {
     @Id
     @GeneratedValue
