@@ -90,7 +90,7 @@ public class AlbumServiceImplTest {
         ResponseStatusException exception = assertThrows(ResponseStatusException.class, () -> {
             albumService.getAlbumById(1L);
         });
-        //assertEquals(HttpStatus.NOT_FOUND, exception.getStatus());
+        assertEquals(HttpStatus.NOT_FOUND, exception.getStatusCode());
         assertEquals("Album with ID 1 not found", exception.getReason());
         verify(mockAlbumRepository, times(1)).findById(1L);
     }
@@ -120,7 +120,7 @@ public class AlbumServiceImplTest {
         ResponseStatusException exception = assertThrows(ResponseStatusException.class, () -> {
             albumService.addNewAlbum(newAlbum);
         });
-        //assertEquals(HttpStatus.BAD_REQUEST, exception.getStatus());
+        assertEquals(HttpStatus.BAD_REQUEST, exception.getStatusCode());
         assertEquals("Incomplete info", exception.getReason());
     }
 
@@ -207,7 +207,7 @@ public class AlbumServiceImplTest {
         ResponseStatusException exception = assertThrows(ResponseStatusException.class, () -> {
             albumService.updateAlbumById(albumId, updateInfo);
         });
-        //assertEquals(HttpStatus.NOT_FOUND, exception.getStatus());
+        assertEquals(HttpStatus.NOT_FOUND, exception.getStatusCode());
         assertEquals("Invalid ID_UPDATE", exception.getReason());
         verify(mockAlbumRepository, times(1)).findById(albumId);
     }
@@ -239,7 +239,7 @@ public class AlbumServiceImplTest {
         ResponseStatusException exception = assertThrows(ResponseStatusException.class, () -> {
             albumService.deleteAlbumById(albumId, null);
         });
-        //assertEquals(HttpStatus.NOT_FOUND, exception.getStatus());
+        assertEquals(HttpStatus.NOT_FOUND, exception.getStatusCode());
         assertEquals("Album with ID 1 not found, nothing to delete", exception.getReason());
         verify(mockAlbumRepository, times(1)).findById(albumId);
     }
