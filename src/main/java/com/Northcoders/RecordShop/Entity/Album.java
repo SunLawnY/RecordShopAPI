@@ -13,7 +13,7 @@ import lombok.Setter;
 @Table(name = "ALBUM")
 public class Album {
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @Column(name = "ARTIST")

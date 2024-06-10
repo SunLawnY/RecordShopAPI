@@ -41,4 +41,9 @@ public class AlbumController {
     public ResponseEntity<Album> deleteAlbumById(@PathVariable Long id, @RequestBody Album album){
         return new ResponseEntity<>(albumService.deleteAlbumById(id, album), HttpStatus.ACCEPTED);
     }
+
+    @GetMapping("/instock")
+    public ResponseEntity<List<Album>> getAlbumInStock(){
+        return new ResponseEntity<>(albumService.getAllAlbumInStock(), HttpStatus.OK);
+    }
 }

@@ -75,4 +75,10 @@ public class AlbumServiceImpl implements AlbumService {
             return deleteAlbum;
         }
     }
+
+    @Override
+    public List<Album> getAllAlbumInStock(){
+        List<Album> albums = new ArrayList<>(albumRepository.findByStockGreaterThan(0));
+        return albums;
+    }
 }
